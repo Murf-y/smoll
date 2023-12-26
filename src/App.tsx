@@ -1,17 +1,18 @@
 import { createSignal } from "solid-js";
-import "./App.css";
 
 function App() {
   const [count, setCount] = createSignal(0);
 
   return (
-    <div class="w-full">
+    <div class="w-full h-screen bg-background flex items-center justify-center flex-col">
       <p>Current count: {count()}</p>
 
       <button
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        class="bg-primary hover:bg-accent text-text font-bold py-2 px-4 rounded"
         onClick={() => setCount(count() + 1)}
-      />
+      >
+        Increment +
+      </button>
     </div>
   );
 }
