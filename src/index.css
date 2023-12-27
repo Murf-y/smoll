@@ -2,11 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
 @layer base {
   :root {
-    font-family: Poppins, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-      Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-      sans-serif;
     line-height: 1.5;
     font-weight: 400;
     font-synthesis: none;
@@ -21,9 +20,6 @@
   }
   .dark {
     transition-duration: 500ms;
-    font-family: Poppins, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-      Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-      sans-serif;
     line-height: 1.5;
     font-weight: 400;
     font-synthesis: none;

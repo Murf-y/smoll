@@ -1,5 +1,6 @@
 import { createSignal } from "solid-js";
 import { NavBar } from "./Navbar";
+import { HeaderTitle } from "./HeaderTitle";
 
 function App() {
   const [theme, setTheme] = createSignal("light");
@@ -12,6 +13,7 @@ function App() {
       }}
     >
       <NavBar theme={theme} setTheme={setTheme} />
+      <HeaderTitle />
     </div>
   );
 }
