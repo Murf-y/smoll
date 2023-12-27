@@ -1,18 +1,17 @@
 import { createSignal } from "solid-js";
+import { NavBar } from "./Navbar";
 
 function App() {
-  const [count, setCount] = createSignal(0);
+  const [theme, setTheme] = createSignal("light");
 
   return (
-    <div class="w-full h-screen bg-background flex items-center justify-center flex-col">
-      <p>Current count: {count()}</p>
-
-      <button
-        class="bg-primary hover:bg-accent text-text font-bold py-2 px-4 rounded"
-        onClick={() => setCount(count() + 1)}
-      >
-        Increment +
-      </button>
+    <div
+      class="w-full h-screen bg-background py-6 px-8"
+      classList={{
+        dark: theme() === "dark",
+      }}
+    >
+      <NavBar theme={theme} setTheme={setTheme} />
     </div>
   );
 }
