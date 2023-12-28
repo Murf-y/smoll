@@ -12,7 +12,7 @@ function NavBar({
   };
 
   return (
-    <div class="w-full flex items-center justify-between">
+    <div class="w-full flex items-center justify-between z-10 relative">
       <img src="/images/Logo.svg" alt="Logo"></img>
       <button onClick={toggleTheme}>
         <Show
