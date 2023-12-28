@@ -32,3 +32,13 @@
     --accent: #ff773d;
   }
 }
+
+.main-box-dark-shadow {
+  box-shadow: -1px 1px 100px 1px rgba(30, 30, 30, 0.25),
+    1px 0px 100px 1px rgba(30, 30, 30, 0.25);
+}
+
+.main-box-light-shadow {
+  box-shadow: -1px 1px 100px 1px rgba(255, 246, 240, 0.1),
+    1px 0px 100px 1px rgba(255, 246, 240, 0.1);
+}
