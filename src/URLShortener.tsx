@@ -3,11 +3,13 @@ import { Show, createSignal } from "solid-js";
 function URLShortener() {
   const [url, setUrl] = createSignal("");
   const [error, setError] = createSignal("");
-  const [shortenedUrl, setShortenedUrl] = createSignal("smoll.link/A3BE");
+  const [shortenedUrl, setShortenedUrl] = createSignal("");
   const [copuButton, setCopyButton] = createSignal("Copy");
 
   const shortenUrl = () => {
     console.log("shortenUrl, url: ", url());
+    setError("");
+    setShortenedUrl(url());
   };
 
   return (
