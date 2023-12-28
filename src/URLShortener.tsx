@@ -1,7 +1,10 @@
-import { createSignal } from "solid-js";
+import { Show, createSignal } from "solid-js";
 
 function URLShortener() {
   const [url, setUrl] = createSignal("");
+  const [error, setError] = createSignal("");
+  const [shortenedUrl, setShortenedUrl] = createSignal("smoll.link/A3BE");
+  const [copuButton, setCopyButton] = createSignal("Copy");
 
   const shortenUrl = () => {
     console.log("shortenUrl, url: ", url());
@@ -21,6 +24,25 @@ function URLShortener() {
           onInput={(e) => setUrl(e.currentTarget.value)}
         />
       </div>
+      <Show when={shortenedUrl()}>
+        <div class="w-full border-primary border-2 h-12 font-poppins text-sm text-primary flex items-center pl-2 pr-1 justify-between flex-row">
+          {shortenedUrl()}
+          <button
+            class="bg-primary hover:bg-accent text-text font-poppins font-medium hover:font-semibold rounded-sm px-4 py-2 w-fit"
+            onClick={() => {
+              navigator.clipboard.writeText(shortenedUrl());
+              setCopyButton("Copied!");
+            }}
+          >
+            {copuButton()}
+          </button>
+        </div>
+      </Show>
+      <Show when={error()}>
+        <div class="w-full border-b-error border-b-2 h-12 bg-errorlight font-poppins text-sm text-error flex items-center px-2">
+          {error()}
+        </div>
+      </Show>
       <button
         class="bg-primary hover:bg-accent text-text font-poppins font-medium hover:font-semibold rounded-sm px-4 py-2 w-fit"
         onClick={shortenUrl}

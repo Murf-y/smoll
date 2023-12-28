@@ -10,6 +10,8 @@ module.exports = {
       primary: "var(--primary)",
       secondary: "var(--secondary)",
       accent: "var(--accent)",
+      error: "#E11D48",
+      errorlight: "#ffebe8",
     },
 
     extend: {
