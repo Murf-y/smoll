@@ -4,7 +4,7 @@ function HeaderTitle() {
   return (
     <div class="text-4xl text-text w-full flex items-center justify-center font-poppins font-semibold mt-4 flex-row gap-3">
       <p>Short URLs are</p>
-      <div class="flex flex-col gap-0 mt-0.5">
+      <div class="flex flex-col gap-0">
         <SolidTyper
           text={["Better!", "Shorter!", "Simpler!"]}
           backspaceSpeed={75}
@@ -12,7 +12,7 @@ function HeaderTitle() {
           loop={true}
           typingPause={1000}
         />
-        <div class="h-0.5 bg-primary"></div>
+        {/* <div class="h-0.5 bg-primary absolute top-0 left-0"></div> */}
       </div>
     </div>
   );
