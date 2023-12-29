@@ -42,3 +42,9 @@
   box-shadow: -1px 1px 100px 1px rgba(255, 246, 240, 0.1),
     1px 0px 100px 1px rgba(255, 246, 240, 0.1);
 }
+
+.text-gradient {
+  background: linear-gradient(90deg, #f79e78 0%, #ff773d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

@@ -11,8 +11,8 @@ function HeaderTitle() {
           typingSpeed={100}
           loop={true}
           typingPause={1000}
+          className="text-gradient"
         />
-        {/* <div class="h-0.5 bg-primary absolute top-0 left-0"></div> */}
       </div>
     </div>
   );
