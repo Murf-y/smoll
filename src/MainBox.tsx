@@ -15,7 +15,7 @@ function MainBox({ theme }: { theme: () => string }) {
           class="bg-background px-4 py-3 rounded-tl-md rounded-tr-md hover:bg-primary hover:cursor-pointer z-10 flex flex-row items-center justify-center gap-2 text-text font-poppins"
           onClick={() => setSelectedOption("shorturl")}
           classList={{
-            "border-t-2 border-l-2 border-r-2 border-accent":
+            "border-t-2 border-l-2 border-r-2 border-primary":
               selectedOption() === "shorturl",
           }}
         >
@@ -38,7 +38,7 @@ function MainBox({ theme }: { theme: () => string }) {
           class="bg-background px-6 py-3 rounded-tl-md rounded-tr-md hover:bg-primary hover:cursor-pointer z-10 flex flex-row items-center justify-center gap-2 text-text font-poppins"
           onClick={() => setSelectedOption("qr")}
           classList={{
-            "border-t-2 border-l-2 border-r-2 border-accent":
+            "border-t-2 border-l-2 border-r-2 border-primary":
               selectedOption() === "qr",
           }}
         >
