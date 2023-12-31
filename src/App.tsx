@@ -1,7 +1,7 @@
 import { Show, createSignal } from "solid-js";
-import { NavBar } from "./Navbar";
-import { HeaderTitle } from "./HeaderTitle";
-import { MainBox } from "./MainBox";
+import { NavBar } from "./components/Navbar";
+import { HeaderTitle } from "./components/HeaderTitle";
+import { MainBox } from "./components/MainBox";
 
 function App() {
   const [theme, setTheme] = createSignal("light");
