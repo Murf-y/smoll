@@ -1,4 +1,5 @@
 import { Show, createSignal } from "solid-js";
+import { LinksApi } from "../api/links";
 
 function URLShortener() {
   const [url, setUrl] = createSignal("");
@@ -6,10 +7,13 @@ function URLShortener() {
   const [shortenedUrl, setShortenedUrl] = createSignal("");
   const [copuButton, setCopyButton] = createSignal("Copy");
 
-  const shortenUrl = () => {
-    console.log("shortenUrl, url: ", url());
+  const shortenUrl = async () => {
+    const res = await new LinksApi().create({
+      longUrl: url(),
+    });
+
     setError("");
-    setShortenedUrl(url());
+    setShortenedUrl(res.payload.shortUrl);
   };
 
   return (

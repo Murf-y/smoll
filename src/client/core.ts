@@ -12,6 +12,7 @@ export type ApiParam =  AxiosInstance | null
 
 export class CoreApi {
   client: AxiosInstance
+  basePath = <string>process.env.API_URL
 
   constructor(param?: ApiParam) {
     // check if property request exists on param
