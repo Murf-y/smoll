@@ -5,9 +5,7 @@ import { useLocation } from "@solidjs/router";
 function URLShortener() {
   const [url, setUrl] = createSignal("");
   const [error, setError] = createSignal("");
-  const [shortenedUrl, setShortenedUrl] = createSignal(
-    "http://localhost:5173/ZG9pc29p"
-  );
+  const [shortenedUrl, setShortenedUrl] = createSignal("");
   const [copuButton, setCopyButton] = createSignal("Copy");
 
   const shortenUrl = async () => {

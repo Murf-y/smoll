@@ -13,7 +13,7 @@ render(() => {
     <Router>
       <Route path="/" component={App} />
       <Route path="/:shortUrl" component={ViewShortUrl} />{" "}
-      <Route path="*404" component={NotFound} />
+      <Route path="/404" component={NotFound} />
     </Router>
   );
 }, root!);

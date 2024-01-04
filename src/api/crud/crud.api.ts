@@ -12,7 +12,7 @@ export interface ApiParams {
 }
 
 
-export default class CrudApi<Model, RequestModel> extends CoreApi {
+export class CrudApi<Model, RequestModel> extends CoreApi {
   path = ''
   constructor(param?: ApiParam) {
     super(param)
@@ -24,8 +24,8 @@ export default class CrudApi<Model, RequestModel> extends CoreApi {
 
 
 
-  async find(params?: ApiParams, options?: AxiosRequestConfig): Promise<CrudResponse<Model[]>> {
-    return (await this.client.get<CrudResponse<Model[]>>(this.path, { ...options, params: params }))
+  async findOne(params?: ApiParams, options?: AxiosRequestConfig): Promise<CrudResponse<Model>> {
+    return (await this.client.get<CrudResponse<Model>>(this.path, { ...options, params: params }))
       .data
   }
 
