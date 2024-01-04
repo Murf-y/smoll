@@ -1,19 +1,47 @@
 import { Show, createSignal } from "solid-js";
 import { LinksApi } from "../api/links";
+import { useLocation } from "@solidjs/router";
 
 function URLShortener() {
   const [url, setUrl] = createSignal("");
   const [error, setError] = createSignal("");
-  const [shortenedUrl, setShortenedUrl] = createSignal("");
+  const [shortenedUrl, setShortenedUrl] = createSignal(
+    "http://localhost:5173/ZG9pc29p"
+  );
   const [copuButton, setCopyButton] = createSignal("Copy");
 
   const shortenUrl = async () => {
-    const res = await new LinksApi().create({
-      longUrl: url(),
-    });
+    try {
+      const regex = new RegExp(
+        "^(https?:\\/\\/)?" +
+          "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
+          "((\\d{1,3}\\.){3}\\d{1,3}))" +
+          "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
+          "(\\?[;&a-z\\d%_.~+=-]*)?" +
+          "(\\#[-a-z\\d_]*)?$",
+        "i"
+      );
 
-    setError("");
-    setShortenedUrl(res.payload.shortUrl);
+      if (!regex.test(url())) {
+        throw new Error("Invalid URL, please enter a valid URL");
+      }
+
+      const res = await new LinksApi().create({
+        longUrl: url(),
+      });
+
+      console.log(res);
+      setError("");
+      setShortenedUrl(window.location.origin + "/" + res.payload.shortUrl);
+    } catch (e) {
+      if (e instanceof Error) {
+        console.log(e.message);
+        setError(e.message);
+      } else {
+        console.log(e);
+        setError("Something went wrong, please try again later");
+      }
+    }
   };
 
   return (
@@ -33,15 +61,37 @@ function URLShortener() {
       <Show when={shortenedUrl()}>
         <div class="w-full border-primary border-2 h-12 font-poppins text-sm text-primary flex items-center pl-2 pr-1 justify-between flex-row">
           {shortenedUrl()}
-          <button
-            class="bg-primary hover:bg-accent text-text font-poppins font-medium hover:font-semibold rounded-sm px-4 py-2 w-fit"
-            onClick={() => {
-              navigator.clipboard.writeText(shortenedUrl());
-              setCopyButton("Copied!");
-            }}
-          >
-            {copuButton()}
-          </button>
+          <div class="flex flex-row gap-1 items-center justify-center">
+            <a
+              href={shortenedUrl()}
+              target="_blank"
+              class="bg-primary hover:bg-accent text-text font-poppins font-medium hover:font-semibold rounded-sm px-2 py-2 w-fit"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                />
+              </svg>
+            </a>
+            <button
+              class="bg-primary hover:bg-accent text-text font-poppins font-medium hover:font-semibold rounded-sm px-4 py-2 w-fit"
+              onClick={() => {
+                navigator.clipboard.writeText(shortenedUrl());
+                setCopyButton("Copied!");
+              }}
+            >
+              {copuButton()}
+            </button>
+          </div>
         </div>
       </Show>
       <Show when={error()}>

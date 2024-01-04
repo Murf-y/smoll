@@ -9,8 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@solidjs/router": "^0.10.5",
     "axios": "^1.6.3",
     "axios-logger": "^2.7.1",
+    "dotenv": "^16.3.1",
     "qrcode.react": "^3.1.0",
     "solid-js": "^1.8.7",
     "solid-typer": "^0.0.3"

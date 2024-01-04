@@ -7,7 +7,7 @@ AxiosLogger.setGlobalConfig({
 
 export function createClient(): AxiosInstance {
   let config: AxiosRequestConfig = {
-    baseURL: <string>process.env.API_URL,
+    baseURL: import.meta.env.VITE_API_URL,
   }
 
   const instance = axios.create(config)
