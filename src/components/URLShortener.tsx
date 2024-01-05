@@ -1,22 +1,22 @@
 import { Show, createSignal } from "solid-js";
 import { LinksApi } from "../api/links";
-import { useLocation } from "@solidjs/router";
 
 function URLShortener() {
   const [url, setUrl] = createSignal("");
   const [error, setError] = createSignal("");
   const [shortenedUrl, setShortenedUrl] = createSignal("");
   const [copuButton, setCopyButton] = createSignal("Copy");
+  const [shortenButtonEnabled, setShortenButtonEnabled] = createSignal(true);
 
   const shortenUrl = async () => {
+    if (!shortenButtonEnabled) return;
+
+    setError("");
+    setShortenedUrl("");
+    setShortenButtonEnabled(false);
     try {
       const regex = new RegExp(
-        "^(https?:\\/\\/)?" +
-          "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
-          "((\\d{1,3}\\.){3}\\d{1,3}))" +
-          "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
-          "(\\?[;&a-z\\d%_.~+=-]*)?" +
-          "(\\#[-a-z\\d_]*)?$",
+        "(https?://(?:www.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9].[^s]{2,}|www.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9].[^s]{2,}|https?://(?:www.|(?!www))[a-zA-Z0-9]+.[^s]{2,}|www.[a-zA-Z0-9]+.[^s]{2,})",
         "i"
       );
 
@@ -28,10 +28,10 @@ function URLShortener() {
         longUrl: url(),
       });
 
-      console.log(res);
-      setError("");
       setShortenedUrl(window.location.origin + "/" + res.payload.shortUrl);
+      setShortenButtonEnabled(true);
     } catch (e) {
+      setShortenButtonEnabled(true);
       if (e instanceof Error) {
         console.log(e.message);
         setError(e.message);
@@ -98,8 +98,9 @@ function URLShortener() {
         </div>
       </Show>
       <button
-        class="bg-primary hover:bg-accent text-text font-poppins font-medium hover:font-semibold rounded-sm px-4 py-2 w-fit"
+        class="bg-primary hover:bg-accent text-text font-poppins font-medium hover:font-semibold rounded-sm px-4 py-2 w-fit disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500"
         onClick={shortenUrl}
+        disabled={!shortenButtonEnabled()}
       >
         Shorten
       </button>

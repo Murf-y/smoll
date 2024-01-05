@@ -1,12 +1,47 @@
-import { QRCodeSVG } from "qrcode.react";
 import { Show, createSignal } from "solid-js";
+// @ts-ignore
+import { QRCodeSVG } from "solid-qr-code";
 
 function QRCode() {
   const [url, setUrl] = createSignal("");
   const [error, setError] = createSignal("");
-  const [generatedQRCode, setGeneratedQRCode] = createSignal("");
+  const [urlToBeGenerated, setUrlToBeGenerated] = createSignal("");
+  const [shortenButtonEnabled, setShortenButtonEnabled] = createSignal(true);
 
-  const createQRCode = () => {};
+  const createQRCode = () => {
+    if (!shortenButtonEnabled) return;
+
+    setShortenButtonEnabled(false);
+    setError("");
+    try {
+      const regex = new RegExp(
+        "(https?://(?:www.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9].[^s]{2,}|www.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9].[^s]{2,}|https?://(?:www.|(?!www))[a-zA-Z0-9]+.[^s]{2,}|www.[a-zA-Z0-9]+.[^s]{2,})",
+        "i"
+      );
+      console.log(regex.test(url()), url());
+      if (!regex.test(url())) {
+        throw new Error("Invalid URL, please enter a valid URL");
+      }
+
+      setUrlToBeGenerated(url());
+
+      // wait 1 second before enabling the button again
+      setTimeout(() => {
+        setShortenButtonEnabled(true);
+      }, 1000);
+    } catch (e) {
+      setShortenButtonEnabled(true);
+      setUrlToBeGenerated("");
+      if (e instanceof Error) {
+        console.log(e.message);
+        setError(e.message);
+      } else {
+        console.log(e);
+        setError("Something went wrong, please try again later");
+      }
+    }
+  };
+
   const downloadQRCode = () => {};
 
   return (
@@ -24,7 +59,16 @@ function QRCode() {
             onInput={(e) => setUrl(e.currentTarget.value)}
           />
         </div>
-        <QRCodeSVG value={"google.com"} />
+        <Show when={urlToBeGenerated() !== ""}>
+          <QRCodeSVG
+            value={urlToBeGenerated()}
+            size={240}
+            bgColor={"#ffffff"}
+            fgColor={"#242424"}
+            level={"H"}
+            includeMargin={false}
+          />
+        </Show>
       </div>
       <Show when={error()}>
         <div class="w-full border-b-error border-b-2 h-12 bg-errorlight font-poppins text-sm text-error flex items-center px-2">
@@ -32,7 +76,7 @@ function QRCode() {
         </div>
       </Show>
       <div class="text-text font-poppins font-medium hover:font-semibold w-fit flex flex-row gap-1">
-        <Show when={generatedQRCode()}>
+        <Show when={urlToBeGenerated() !== ""}>
           <button
             class="bg-primary hover:bg-accent rounded-sm px-2 py-2 w-fit"
             onClick={downloadQRCode}
@@ -52,8 +96,9 @@ function QRCode() {
           </button>
         </Show>
         <button
-          class="bg-primary hover:bg-accent rounded-sm px-4 py-2 w-fit"
+          class="bg-primary hover:bg-accent rounded-sm px-4 py-2 w-fit disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500"
           onClick={createQRCode}
+          disabled={!shortenButtonEnabled()}
         >
           QR Code
         </button>
