@@ -43,23 +43,23 @@ function URLShortener() {
   };
 
   return (
-    <div class="py-8 px-14 w-full h-full flex flex-col justify-between items-end">
+    <div class="py-4 sm:py-8 px-4 sm:px-14 w-full h-full flex flex-col justify-between items-end">
       <div class="flex flex-col items-start gap-4 w-full">
-        <div class="text-text font-medium text-lg font-poppins">
+        <div class="text-text font-medium text-sm sm:text-lg font-poppins">
           Shorten a long URL
         </div>
         <input
           type="text"
-          class="w-full bg-background border-2 border-text opacity-30 focus:border-accent focus:text-accent focus:opacity-100 rounded-sm px-4 py-2 text-text font-poppins"
+          class="w-full bg-background border-2 border-text opacity-30 focus:border-accent focus:text-accent focus:opacity-100 rounded-sm px-2 sm:px-4 py-2 text-text text-sm sm:text-base font-poppins"
           placeholder="Enter or Paste a URL here"
           value={url()}
           onInput={(e) => setUrl(e.currentTarget.value)}
         />
       </div>
       <Show when={shortenedUrl()}>
-        <div class="w-full border-primary border-2 h-12 font-poppins text-sm text-primary flex items-center pl-2 pr-1 justify-between flex-row">
+        <div class="w-full border-primary border-2 h-20 sm:h-12 font-poppins text-xs sm:text-sm text-primary flex items-start sm:items-center pl-2 pr-1 justify-between py-2 flex-col sm:flex-row text-wrap overflow-x-scroll overflow-y-hidden sm:overflow-hidden">
           {shortenedUrl()}
-          <div class="flex flex-row gap-1 items-center justify-center">
+          <div class="flex flex-row gap-1 items-center justify-center min-h-fit place-self-end sm:place-self-auto">
             <a
               href={shortenedUrl()}
               target="_blank"
@@ -81,7 +81,7 @@ function URLShortener() {
               </svg>
             </a>
             <button
-              class="bg-primary hover:bg-accent text-text font-poppins font-medium hover:font-semibold rounded-sm px-4 py-2 w-fit"
+              class="bg-primary hover:bg-accent text-text font-poppins font-medium hover:font-semibold rounded-sm px-4 py-2 w-fit h-full"
               onClick={() => {
                 navigator.clipboard.writeText(shortenedUrl());
                 setCopyButton("Copied!");
@@ -93,12 +93,12 @@ function URLShortener() {
         </div>
       </Show>
       <Show when={error()}>
-        <div class="w-full border-b-error border-b-2 h-12 bg-errorlight font-poppins text-sm text-error flex items-center px-2">
+        <div class="w-full border-b-error border-b-2 h-12 bg-errorlight font-poppins text-xs sm:text-sm text-error flex items-center px-2">
           {error()}
         </div>
       </Show>
       <button
-        class="bg-primary hover:bg-accent text-text font-poppins font-medium hover:font-semibold rounded-sm px-4 py-2 w-fit disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500"
+        class="bg-primary hover:bg-accent text-text font-poppins font-medium hover:font-semibold rounded-sm text-sm sm:text-base px-4 py-2 w-fit disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500"
         onClick={shortenUrl}
         disabled={!shortenButtonEnabled()}
       >

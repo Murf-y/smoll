@@ -9,10 +9,10 @@ function MainBox({ theme }: { theme: () => string }) {
   const [selectedOption, setSelectedOption] = createSignal("shorturl");
 
   return (
-    <div class="w-full mt-20 flex items-center justify-center z-10 relative flex-col gap-0">
-      <div class="flex flex-row items-center justify-evenly w-1/2">
+    <div class="w-full mt-12 sm:mt-20 flex items-center justify-center z-10 relative flex-col gap-0">
+      <div class="flex flex-row items-center justify-evenly w-full sm:w-3/4 md:w-1/2">
         <div
-          class="bg-background px-4 py-3 rounded-tl-md rounded-tr-md hover:bg-primary hover:cursor-pointer z-10 flex flex-row items-center justify-center gap-2 text-text font-poppins"
+          class="bg-background px-1 py-2 text-xs sm:text-base sm:px-4 sm:py-3 rounded-tl-md rounded-tr-md hover:bg-primary hover:cursor-pointer z-10 flex flex-row items-center justify-center gap-2 text-text font-poppins"
           onClick={() => setSelectedOption("shorturl")}
           classList={{
             "border-t-2 border-l-2 border-r-2 border-primary":
@@ -35,7 +35,7 @@ function MainBox({ theme }: { theme: () => string }) {
           Short URL
         </div>
         <div
-          class="bg-background px-6 py-3 rounded-tl-md rounded-tr-md hover:bg-primary hover:cursor-pointer z-10 flex flex-row items-center justify-center gap-2 text-text font-poppins"
+          class="bg-background px-1 py-2 text-xs sm:text-base sm:px-4 sm:py-3 rounded-tl-md rounded-tr-md hover:bg-primary hover:cursor-pointer z-10 flex flex-row items-center justify-center gap-2 text-text font-poppins"
           onClick={() => setSelectedOption("qr")}
           classList={{
             "border-t-2 border-l-2 border-r-2 border-primary":
@@ -71,7 +71,7 @@ function MainBox({ theme }: { theme: () => string }) {
         </div>
       </div>
       <div
-        class="bg-background rounded-md w-[55%] h-72 -mt-[1px]"
+        class="bg-background rounded-md w-full mx-12 md:mx-0 md:w-3/4 h-64 sm:h-72 -mt-[1px]"
         classList={{
           "main-box-dark-shadow": theme() === "light",
           "main-box-light-shadow": theme() === "dark",

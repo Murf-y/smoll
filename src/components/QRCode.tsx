@@ -1,14 +1,60 @@
-import { Show, createSignal } from "solid-js";
+import { Show, createSignal, createEffect } from "solid-js";
 // @ts-ignore
 import { QRCodeSVG } from "solid-qr-code";
+
+function useWindowSize() {
+  const [windowSize, setWindowSize] = createSignal<{
+    width: number;
+    height: number;
+  }>({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  createEffect(() => {
+    // only execute all the code below in client side
+    // Handler to call on window resize
+    function handleResize() {
+      // Set window width/height to state
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+
+    // Call handler right away so state gets updated with initial window size
+    handleResize();
+
+    // Remove event listener on cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }); // Empty array ensures that effect is only run on mount
+  return windowSize;
+}
 
 function QRCode() {
   const [url, setUrl] = createSignal("");
   const [error, setError] = createSignal("");
   const [urlToBeGenerated, setUrlToBeGenerated] = createSignal("");
   const [shortenButtonEnabled, setShortenButtonEnabled] = createSignal(true);
+  const windowSize = useWindowSize();
+
+  console.log(windowSize());
+
   let qrRef: HTMLDivElement | undefined;
 
+  const getQrCodeSize = () => {
+    if (windowSize().width > 768) {
+      return 215;
+    }
+    if (windowSize().width > 640) {
+      return 170;
+    } else {
+      return 120;
+    }
+  };
   const createQRCode = () => {
     if (!shortenButtonEnabled) return;
 
@@ -67,15 +113,15 @@ function QRCode() {
   };
 
   return (
-    <div class="py-8 px-14 w-full h-full flex flex-col justify-between items-end">
-      <div class="flex flex-row justify-between items-start w-full">
+    <div class="py-4 sm:py-8 px-4 sm:px-14 w-full h-full flex flex-col justify-between items-end">
+      <div class="flex flex-col gap-2 sm:gap-0 sm:flex-row justify-between items-start w-full">
         <div class="flex flex-col items-start gap-4 w-full">
-          <div class="text-text font-medium text-lg font-poppins">
+          <div class="text-text font-medium text-sm sm:text-lg font-poppins">
             Create a QR Code
           </div>
           <input
             type="text"
-            class="w-3/4 bg-background border-2 border-text opacity-30 focus:border-accent focus:text-accent focus:opacity-100 rounded-sm px-4 py-2 text-text font-poppins"
+            class="w-3/4 bg-background border-2 border-text opacity-30 focus:border-accent focus:text-accent focus:opacity-100 rounded-sm px-2 sm:px-4 py-2 text-text text-sm sm:text-base font-poppins"
             placeholder="Enter or Paste a URL here"
             value={url()}
             onInput={(e) => setUrl(e.currentTarget.value)}
@@ -85,16 +131,17 @@ function QRCode() {
           <QRCodeSVG
             ref={qrRef}
             value={urlToBeGenerated()}
-            size={240}
+            size={getQrCodeSize()}
             bgColor={"#ffffff"}
             fgColor={"#242424"}
             level={"H"}
             includeMargin={false}
+            class="place-self-end"
           />
         </Show>
       </div>
       <Show when={error()}>
-        <div class="w-full border-b-error border-b-2 h-12 bg-errorlight font-poppins text-sm text-error flex items-center px-2">
+        <div class="w-full border-b-error border-b-2 h-12 bg-errorlight font-poppins text-xs sm:text-sm text-error flex items-center px-2">
           {error()}
         </div>
       </Show>
@@ -119,7 +166,7 @@ function QRCode() {
           </button>
         </Show>
         <button
-          class="bg-primary hover:bg-accent rounded-sm px-4 py-2 w-fit disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500"
+          class="bg-primary hover:bg-accent rounded-sm text-sm sm:text-base px-4 py-2 w-fit disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500"
           onClick={createQRCode}
           disabled={!shortenButtonEnabled()}
         >

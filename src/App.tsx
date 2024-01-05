@@ -25,13 +25,12 @@ function App() {
       </div>
       <NavBar theme={theme} setTheme={setTheme} />
       <HeaderTitle />
-      <div class="w-full flex items-center justify-center font-poppins mt-8 flex-col">
-        <div class="text-xl text-text flex flex-row gap-1">
-          Create a blazingly <p class="font-bold">fast</p>, easy to{" "}
-          <p class="font-bold">remember</p>, and{" "}
-          <p class="font-bold">shareable</p>
+      <div class="w-full text-xs sm:text-lg md:text-xl flex items-center justify-center font-poppins mt-8 flex-col">
+        <div class="text-text text-center">
+          Create a blazingly <strong>fast</strong>, easy to{" "}
+          <strong>remember</strong>, and <strong>shareable</strong> shortened
+          URL.
         </div>
-        <p class="text-xl text-text">shortened URL.</p>
       </div>
       <MainBox theme={theme} />
     </div>
