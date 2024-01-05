@@ -1,5 +1,5 @@
 import { Show, createResource } from "solid-js";
-import { Navigate, useParams } from "@solidjs/router";
+import { useParams } from "@solidjs/router";
 import { LinksApi } from "./api/links";
 
 async function fetchLongLink(shortUrlCode: string) {
