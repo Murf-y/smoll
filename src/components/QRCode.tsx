@@ -7,6 +7,7 @@ function QRCode() {
   const [error, setError] = createSignal("");
   const [urlToBeGenerated, setUrlToBeGenerated] = createSignal("");
   const [shortenButtonEnabled, setShortenButtonEnabled] = createSignal(true);
+  let qrRef: HTMLDivElement | undefined;
 
   const createQRCode = () => {
     if (!shortenButtonEnabled) return;
@@ -42,7 +43,28 @@ function QRCode() {
     }
   };
 
-  const downloadQRCode = () => {};
+  const downloadQRCode = () => {
+    if (!qrRef) {
+      setError("Something went wrong, please try again later");
+      return;
+    }
+
+    const name = "qr-code.svg";
+
+    qrRef.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    var svgData = qrRef.outerHTML;
+    var preface = '<?xml version="1.0" standalone="no"?>\r\n';
+    var svgBlob = new Blob([preface, svgData], {
+      type: "image/svg+xml;charset=utf-8",
+    });
+    var svgUrl = URL.createObjectURL(svgBlob);
+    var downloadLink = document.createElement("a");
+    downloadLink.href = svgUrl;
+    downloadLink.download = name;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
 
   return (
     <div class="py-8 px-14 w-full h-full flex flex-col justify-between items-end">
@@ -61,6 +83,7 @@ function QRCode() {
         </div>
         <Show when={urlToBeGenerated() !== ""}>
           <QRCodeSVG
+            ref={qrRef}
             value={urlToBeGenerated()}
             size={240}
             bgColor={"#ffffff"}
