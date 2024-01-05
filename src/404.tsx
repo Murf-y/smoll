@@ -67,10 +67,10 @@ function NotFound() {
             fill="#F79E78"
           />
         </svg>
-        <div class="text-4xl text-text font-poppins font-semibold mt-4">
+        <div class="text-2xl sm:text-4xl text-text font-poppins font-semibold mt-4">
           404 Not Found
         </div>
-        <div class="text-2xl text-text font-poppins mt-4">
+        <div class="text-sm sm:text-2xl text-text font-poppins mt-4">
           This Smoll link does not exist.
         </div>
       </div>
